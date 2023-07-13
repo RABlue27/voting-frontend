@@ -44,8 +44,6 @@
     function handleVote(index) {
       players[index] = players[index];
       votes[index] = !votes[index];
-      console.log(players[index]);
-      console.log(comments[index]);
       saveVotingData();
     }
   
@@ -78,12 +76,12 @@
   <input type="text" disabled={votes[index]} bind:value={players[index]} on:input={(e) => handleChange(e, index)} />
   <input type="text" disabled={votes[index]} bind:value={comments[index]} on:input={(e) => handleComment(e, index)} />
   <button on:click={() => { handleVote(index); handleComment(index); }}>{votes[index] ? "Undo Vote" : "Save Vote"}</button>
-  <button on:click={() => { resetAll()  }}>Reset Everything</button>
-
+  
   {/each}
-
-
+  
+  
   <button on:click={() => { submitVotes() }} class="finalize-votes">Finalize and Submit Votes</button> 
+  <button on:click={() => { resetAll()  }}>Reset Everything</button>
 
   <style>
     /* Button */
