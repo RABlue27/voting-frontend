@@ -1,11 +1,14 @@
 <script>
-    let username = '';
+    import { username  } from "./stores";
+
+    let user = '';
     let password = '';
   
     function handleSubmit() {
-      // Handle login form submission here
-      console.log('Username:', username);
-      console.log('Password:', password);
+
+      console.log('Username:', user);
+      username.set(user);
+
     }
   </script>
 
@@ -20,7 +23,7 @@
         </thead>
         <tbody>
           <tr>
-            <td><input type="text" bind:value={username} /></td>
+            <td><input type="text" bind:value={ user } /></td>
             <td><input type="password" bind:value={password} /></td>
           </tr>
           <tr>

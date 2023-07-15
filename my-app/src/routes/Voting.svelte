@@ -5,19 +5,42 @@
     let comments = ["", "", "", ""];
     let votes = [false, false, false, false];
     let didv;
-    import { voted, currentDisplay, results } from "./stores.js";
+    let user = "";
+    import { voted, currentDisplay, results, username } from "./stores.js";
 
 	voted.subscribe((voted) => {
     voted ? didv = true: didv = false;
 	});
 
+	username.subscribe((username) => {
+    user = username;
+	});
   
+
+
     function saveVotingData() {
       localStorage.setItem('votingData', JSON.stringify({ players, comments, votes }));
     }
+
+    function jsonifyVotes(){
+      var j = {};
+      for (let i = 0; i < players.length; i++) {
+        let playerKey = "player" + (i + 1);
+        let commentKey = "comment" + (i + 1);
+        
+        j[playerKey] = players[i];
+        j[commentKey] = comments[i];
+}
+      j.user = user;
+      j.timestamp = Date.now();
+      return j;
+    }
   
-    function submitVotes() {
-      results.set(players.filter((player, index) => votes[index] !== false));
+    function postVotesToBackend() {
+      let results = jsonifyVotes();
+      console.log(results);
+      // results.set(players.filter((player, index) => votes[index] !== false));
+      votes = votes.map(() => true);
       voted.set(true);
       currentDisplay.set(1);
       saveVotingData();
@@ -38,7 +61,8 @@
     }
   
     function handleComment(event, index) {
-      comments[index] = event.target.value;
+      // comments[index] = event.target.value;
+      return;
     }
   
     function handleVote(index) {
@@ -80,7 +104,7 @@
   {/each}
   
   
-  <button on:click={() => { submitVotes() }} class="finalize-votes">Finalize and Submit Votes</button> 
+  <button on:click={() => { postVotesToBackend() }} class="finalize-votes">Finalize and Submit Votes</button> 
   <button on:click={() => { resetAll()  }}>Reset Everything</button>
 
   <style>
@@ -92,6 +116,15 @@
       box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
     }
   
+    .container:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    background-color: #888888;
+    cursor: not-allowed;
+    border: 2px solid red;
+}
+
+
     h1 {
       font-size: 20px;
       font-weight: bold;

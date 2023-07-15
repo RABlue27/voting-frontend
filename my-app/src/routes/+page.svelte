@@ -40,9 +40,4 @@
     background-color: #111;
   }
 
-  main {
-  margin-top: 10px; /* Adjust this value to create space below the header */
-  padding: 20px;
-  }
-
 </style>

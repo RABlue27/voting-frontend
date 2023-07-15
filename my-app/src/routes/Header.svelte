@@ -1,10 +1,15 @@
 <script>
-    import {currentDisplay} from "./stores.js" 
-    let userName = "RagingAcid";
+    import {currentDisplay, username} from "./stores.js" 
+    let user = "";
 
     function handleClick(index) {
         currentDisplay.set(index);
   }
+
+  username.subscribe((username) => {
+    user = username;
+	});
+  
 
 
 </script>
@@ -13,7 +18,7 @@
     <button on:click={() => handleClick(1)}>Results</button>
     <button on:click={() => handleClick(2)}>Past Ballots</button>
     <button on:click={() => handleClick(3)}>Login</button>
-    <p> {userName } </p>
+    <p> { user } </p>
 </header>
 
 
