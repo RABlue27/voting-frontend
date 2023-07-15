@@ -84,71 +84,65 @@
   <button on:click={() => { resetAll()  }}>Reset Everything</button>
 
   <style>
-    /* Button */
-    button {
-      padding: 5px 10px;
-      background-color: #555;
-      border: none;
-      color: #fff;
-      cursor: pointer;
-      display: inline-block;
-      vertical-align: middle;
-    }
-  
-    button:hover {
-      background-color: #777;
-    }
-  
-    /* Container */
     .container {
-      margin-bottom: 20px;
-    }
-  
-    .container h1 {
-      font-size: 24px;
+      background-color: #1a1a1a;
+      padding: 10px;
       margin-bottom: 10px;
-      color: #fff;
-    }
-  
-    .container h2 {
-      font-size: 18px;
-      color: #fff;
-    }
-  
-    /* Inputs */
-    input[type="text"] {
-      padding: 5px;
-      width: 100%;
-      box-sizing: border-box;
-      border: 1px solid #555;
-      background-color: #333;
-      color: #fff;
       border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+    }
+  
+    h1 {
+      font-size: 20px;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+  
+    h2 {
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+  
+    input[type="text"] {
+      font-family: 'Arial', sans-serif;
+      font-size: 14px;
+      color: #fff;
+      background-color: #333;
+      padding: 8px;
+      border: 1px solid #444;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+  
+    button {
+      font-family: 'Arial', sans-serif;
+      font-size: 14px;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+  
+    .finalize-votes {
+      background-color: #dc3545;
+      margin-right: 10px;
+    }
+  
+    button:focus {
       outline: none;
     }
   
-    /* Disabled Inputs */
-    input[type="text"]:disabled {
-      background-color: #555;
+    button:disabled {
+      background-color: #777;
       cursor: not-allowed;
     }
   
-    button.finalize-votes {
-    margin-top: 20px;
-    background-color:green;
-    border: none;
-    color: #fff;
-    padding: 15px 30px;
-    cursor: pointer;
-    display: inline-block;
-    vertical-align: middle;
-    font-size: 20px; 
-    font-weight: bold;
-    border-radius: 4px; 
-  }
-
-  button.finalize-votes:hover {
-    background-color: #777;
-  }
+    .container:last-child {
+      margin-bottom: 0;
+    }
   </style>
-  

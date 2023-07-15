@@ -139,8 +139,6 @@ let data = {
 
 </script>
 
-<button on:click={() => { ballots() }}>Back to Ballots</button>
-
 {#each Object.entries(data.Results) as [league, category]}
   <h2>{league}</h2>
   {#each Object.entries(category) as [categoryName, players]}
@@ -188,6 +186,14 @@ table {
   border-collapse: collapse;
 }
 
+h2 {
+  color: white;
+}
+
+h3 {
+  color: white;
+}
+
 /* Table Head */
 thead {
   background-color: #333;
@@ -197,7 +203,7 @@ thead {
 thead th {
   padding: 10px;
   text-align: left;
-  border-bottom: 1px solid #555;
+  border-bottom: 1px solid #fff;
 }
 
 /* Table Body */

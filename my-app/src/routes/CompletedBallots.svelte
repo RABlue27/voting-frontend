@@ -88,6 +88,10 @@ table {
   border-collapse: collapse;
 }
 
+h1 {
+  color: white;
+}
+
 /* Table Head */
 thead {
   background-color: #333;

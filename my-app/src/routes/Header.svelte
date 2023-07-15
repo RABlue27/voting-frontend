@@ -1,42 +1,50 @@
 <script>
     import {currentDisplay} from "./stores.js" 
+    let userName = "RagingAcid";
 
     function handleClick(index) {
         currentDisplay.set(index);
   }
 
-</script>
 
+</script>
 <header>
     <button on:click={() => handleClick(0)}>Vote</button>
     <button on:click={() => handleClick(1)}>Results</button>
     <button on:click={() => handleClick(2)}>Past Ballots</button>
     <button on:click={() => handleClick(3)}>Login</button>
-  </header>
-  
-  <style>
-    header {
-      background-color: #222;
-      display: flex;
-      justify-content: center;
-      width: 100%;
-      position: fixed;
-      top: 0;
-      left: 0;
-    }
-  
-    /* Buttons */
-    button {
-      padding: 8px 16px;
-      margin: 0 10px;
-      background-color: #555;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-    }
-  
-    button:hover {
-      background-color: #667;
-      color: azure;
-    }
-  </style>
+    <p> {userName } </p>
+</header>
+
+
+
+    <style>
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1a1a1a;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+  }
+
+  button {
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    margin-right: 8px;
+    cursor: pointer;
+  }
+
+  p {
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    color: #fff;
+    margin-right: 8px;
+  }
+    </style>
+    

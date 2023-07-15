@@ -21,7 +21,6 @@
 
 
 </script>
-
 <Header />
 
 <main>
@@ -38,7 +37,7 @@
 
 <style>
   :global(body) {
-    background-color: gray;
+    background-color: #111;
   }
 
   main {
