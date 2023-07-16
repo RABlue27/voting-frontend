@@ -35,6 +35,8 @@
       j.timestamp = Date.now();
       return j;
     }
+
+    import { fade } from 'svelte/transition';
   
     function postVotesToBackend() {
       let results = jsonifyVotes();
@@ -125,6 +127,10 @@
 }
 
 
+h1, h2 {
+  display: inline;
+}
+
     h1 {
       font-size: 20px;
       font-weight: bold;
@@ -150,6 +156,12 @@
       margin-bottom: 10px;
     }
   
+    input[type="text"]:disabled {
+      opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #888888;
+    }
+
     button {
       font-family: 'Arial', sans-serif;
       font-size: 14px;
