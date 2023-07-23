@@ -46,80 +46,56 @@ let data = {
           "Comment": "Crafty pitcher with excellent command and repertoire."
         }
       ]
+    },
+    {
+      "WeekNumber": 3,
+      "Players": [
+        {
+          "Name": "Vladimir Guerrero Jr.",
+          "Comment": "Continues to impress with his hitting prowess."
+        },
+        {
+          "Name": "Xander Bogaerts",
+          "Comment": "An essential player for the Boston Red Sox."
+        },
+        {
+          "Name": "Max Scherzer",
+          "Comment": "Unyielding intensity and masterful pitching."
+        },
+        {
+          "Name": "Bryce Harper",
+          "Comment": "A fierce competitor with an undeniable passion for the game."
+        }
+      ]
     }
+    
   ]
 }
 
 </script>
 
-
-<h1>MLB Players</h1>
-
-<table>
-    <thead>
-      <tr>
-        <th>Week</th>
-        <th>Name</th>
-        <th>Comment</th>
-      </tr>
-    </thead>
-    <tbody>
-      {#each data.Weeks as week}
-      <tr>
-        <td colspan="3">
-          <h2>Week {week.WeekNumber}</h2>
-        </td>
-      </tr>
-      {#each week.Players as player}
-      <tr>
-        <td></td>
-        <td>{player.Name}</td>
-        <td>{player.Comment}</td>
-      </tr>
-      {/each}
-      {/each}
-    </tbody>
-  </table>
-
-<style>
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-h1 {
-  color: white;
-}
-
-/* Table Head */
-thead {
-  background-color: #333;
-  color: #fff;
-}
-
-thead th {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #555;
-}
-
-/* Table Body */
-tbody {
-  background-color: #222;
-}
-
-tbody td {
-  padding: 10px;
-  border-bottom: 1px solid #555;
-  color: #fff; /* Updated text color */
-}
-
-/* Alternate row color */
-tbody tr:nth-child(even) {
-  background-color: #333;
-}
-
-
-
-</style>
+<table class="w-full h-full">
+  <thead>
+    <tr class="w-full text-left">
+      <th class="p-2">Week</th>
+      <th class="p-2">Name</th>
+      <th class="p-2">Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+    {#each data.Weeks as week}
+    <tr class="bg-gray-900">
+      <td colspan="3" class="p-2">
+        <h2 class="text-white font-semibold">Week {week.WeekNumber}</h2>
+      </td>
+    </tr>
+    {#each week.Players as player, index}
+    <tr class="{index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-300'}">
+      <td class="p-2"></td>
+      <td class="p-2">{player.Name}</td>
+      <td class="p-2">{player.Comment}</td>
+    </tr>
+    {/each}
+    {/each}
+  </tbody>
+</table>

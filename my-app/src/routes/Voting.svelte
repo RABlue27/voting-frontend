@@ -93,117 +93,46 @@
 
 
 {#each players as player, index}
-  <div class="container">
+  <div>
     {#if player != "" && votes[index] != false}
-    <h1>You Voted For: </h1>
-    <h2>{player}</h2>
+    <h1 class="text-3xl mt-2.5">You Voted For: {player}</h1>
     {:else}
-    <h1> Vote for {subject(index)} </h1>
+    <h1 class="text-3xl mt-2.5"> Vote for {subject(index)} </h1>
     {/if}
   </div>
 
-  <!-- <input type="text" disabled={votes[index]} bind:value={players[index]} on:input={(e) => handleChange(e, index)} /> -->
 
+ 
   <AutoComplete
   items="{allPlayers}"
   placeholder={players[index]}
   bind:value={players[index]}
   hideArrow={true}
   disabled={votes[index]}
+  class="px-1 py-2 rounded-sm border disabled:bg-slate-100 hover:bg-teal-50 w-96 mb-6 mt-1 placeholder-black"
 />
 
-  <input type="text" disabled={votes[index]} bind:value={comments[index]}/>
-  <button on:click={() => { handleVote(index); handleComment(index); }}>{votes[index] ? "Undo Vote" : "Save Vote"}</button>
+
+  <input type="text" disabled={votes[index]} bind:value={comments[index]} class=
+  "px-1 py-2 rounded-sm border disabled:bg-slate-100 hover:bg-teal-50 w-96 mb-6 mt-1" 
+  />
+
+  <button 
+  on:click={() => { handleVote(index); handleComment(index); }}
+  class={
+    `py-2 px-4 bg-teal-500 hover:bg-teal-600 focus:bg-teal-700 text-white font-medium rounded shadow ${
+      votes[index] ? 'dark:bg-teal-700' : ''
+    }`
+  }
+>
+  {votes[index] ? "Undo Vote" : "Save Vote"}
+</button>
+
   
   {/each}
   
+  <div class="flex space-x-10">
+    <button on:click={() => { postVotesToBackend() }} class="my-4 py-2 px-4 bg-green-700 hover:bg-green-900 text-white font-semibold rounded w-32">Submit Votes</button> 
+    <button on:click={() => { resetAll() }} class="my-4 py-2 px-4 bg-red-700 hover:bg-rose-900 text-white font-semibold rounded w-32">Reset Everything</button>
+  </div>
   
-  <button on:click={() => { postVotesToBackend() }} class="finalize-votes">Finalize and Submit Votes</button> 
-  <button on:click={() => { resetAll()  }}>Reset Everything</button>
-
-  <style>
-    .container {
-      background-color: #1a1a1a;
-      padding: 10px;
-      margin-bottom: 10px;
-      border-radius: 4px;
-      box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
-    }
-  
-    .container:disabled {
-    opacity: 0.5;
-    pointer-events: none;
-    background-color: #888888;
-    cursor: not-allowed;
-    border: 2px solid red;
-}
-
-
-
-h1, h2 {
-  display: inline;
-}
-
-    h1 {
-      font-size: 20px;
-      font-weight: bold;
-      color: #fff;
-      margin-bottom: 5px;
-    }
-  
-    h2 {
-      font-size: 16px;
-      font-weight: bold;
-      color: #fff;
-      margin-bottom: 5px;
-    }
-  
-    input[type="text"] {
-      font-family: 'Arial', sans-serif;
-      font-size: 14px;
-      color: #fff;
-      background-color: #333;
-      padding: 8px;
-      border: 1px solid #444;
-      border-radius: 4px;
-      margin-bottom: 10px;
-    }
-  
-    input[type="text"]:disabled {
-      opacity: 0.5;
-    cursor: not-allowed;
-    background-color: #888888;
-    }
-
-    button {
-      font-family: 'Arial', sans-serif;
-      font-size: 14px;
-      color: #fff;
-      background-color: #007bff;
-      border: none;
-      border-radius: 4px;
-      padding: 8px 16px;
-      cursor: pointer;
-    }
-  
-    .finalize-votes {
-      background-color: #dc3545;
-      margin-right: 10px;
-    }
-  
-    button:focus {
-      outline: none;
-    }
-  
-    button:disabled {
-      background-color: #777;
-      cursor: not-allowed;
-    }
-  
-    .container:last-child {
-      margin-bottom: 0;
-    }
-
-
-
-  </style>

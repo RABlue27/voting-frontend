@@ -7,9 +7,6 @@
   import {voted, results, currentDisplay} from "./stores.js";
   let display;
 
-  // display values:
-  // 0 = vote, 1 = results, 2 = past ballots
-
 	voted.subscribe((voted) => {
     display ? display = 0 : display = 1;
 	});
@@ -19,11 +16,12 @@
 	});
 
 
-
 </script>
-<Header />
 
-<main>
+
+<Header /> 
+
+<main class="grid place-items-center h-10/12">
 {#if display == 0} 
 <Voting bind:results={$results} />
 {:else if display == 1} 
@@ -35,9 +33,3 @@
 {/if}
 </main>
 
-<style>
-  :global(body) {
-    background-color: #111;
-  }
-
-</style>
