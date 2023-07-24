@@ -84,9 +84,9 @@ let data = {
   </thead>
   <tbody>
     {#each data.Weeks as week}
-    <tr class="bg-gray-900">
+    <tr class="">
       <td colspan="3" class="p-2">
-        <h2 class="text-white font-semibold">Week {week.WeekNumber}</h2>
+        <h2 class=" font-semibold">Week {week.WeekNumber}</h2>
       </td>
     </tr>
     {#each week.Players as player, index}

@@ -141,12 +141,12 @@ let data = {
 </script>
 
 {#each Object.entries(data.Results) as [league, category]}
-  <h2 class="text-2xl font-bold mt-4 mb-2">{league}</h2>
+  <h2 class="text-2xl font-bold mt-4 mb-2 underline">{league}</h2>
   {#each Object.entries(category) as [categoryName, players]}
     <h3 class="text-xl font-semibold mt-2 mb-1">{categoryName}</h3>
     <table class="w-full border-collapse border rounded-lg overflow-hidden">
       <thead>
-        <tr class="bg-gray-900 text-white">
+        <tr class="">
           <th class="px-4 py-2 font-semibold text-left">Player</th>
           <th class="px-4 py-2 font-semibold text-left">Votes</th>
         </tr>
@@ -156,7 +156,7 @@ let data = {
         <tr class="{index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-300'}">
           <td class="px-4 py-2 border w-8/12">{player.Name}</td>
           <td class="px-4 py-2 border w-8/12">
-            <button class="bg-teal-700 hover:bg-teal-800 active:bg-teal-900 text-white px-2 py-1 rounded w-full h-full {player.showDetails ? 'bg-teal-900' : ''}" on:click={() => (player.showDetails = !player.showDetails)} style="width: 100%;">
+            <button class="bg-teal-400 hover:bg-teal-500 active:bg-teal-600 text-white px-2 py-1 rounded w-full h-full {player.showDetails ? 'bg-teal-900' : ''}" on:click={() => (player.showDetails = !player.showDetails)} style="width: 100%;">
               {player.Votes}
             </button>
           </td>

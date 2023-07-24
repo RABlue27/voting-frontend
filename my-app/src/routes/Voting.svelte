@@ -109,12 +109,12 @@
   bind:value={players[index]}
   hideArrow={true}
   disabled={votes[index]}
-  class="px-1 py-2 rounded-sm border disabled:bg-slate-100 hover:bg-teal-50 w-96 mb-6 mt-1 placeholder-black"
+  class="px-1 py-2 rounded-sm border disabled:bg-slate-200 hover:bg-teal-50 w-96 mt-1 placeholder-black border-stone-950"
 />
 
 
   <input type="text" disabled={votes[index]} bind:value={comments[index]} class=
-  "px-1 py-2 rounded-sm border disabled:bg-slate-100 hover:bg-teal-50 w-96 mb-6 mt-1" 
+  "px-1 py-2 rounded-sm border disabled:bg-slate-200 hover:bg-teal-50 w-96 mb-6 mt-1 border-stone-950" 
   />
 
   <button 
