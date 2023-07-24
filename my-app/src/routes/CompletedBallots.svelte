@@ -73,10 +73,10 @@ let data = {
 }
 
 </script>
-
-<table class="w-full h-full">
+<div class="border-gray-950 border-2 w-8/12 mt-4">
+<table class="w-full h-full ">
   <thead>
-    <tr class="w-full text-left">
+    <tr class="w-full text-left bg-teal-400 text-">
       <th class="p-2">Week</th>
       <th class="p-2">Name</th>
       <th class="p-2">Comment</th>
@@ -84,7 +84,7 @@ let data = {
   </thead>
   <tbody>
     {#each data.Weeks as week}
-    <tr class="">
+    <tr class="border-gray-950 border-2 border-r-0 border-l-0">
       <td colspan="3" class="p-2">
         <h2 class=" font-semibold">Week {week.WeekNumber}</h2>
       </td>
@@ -99,3 +99,4 @@ let data = {
     {/each}
   </tbody>
 </table>
+</div>

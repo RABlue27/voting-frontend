@@ -1,6 +1,8 @@
 <script>
     import {currentDisplay, username} from "./stores.js" 
-    let user = "";
+
+       let user = "";
+       let dropDown = false;
 
 
     function logout() {
@@ -32,7 +34,24 @@
     <button class="px-4 py-2 bg-teal-600 text-white hover:bg-teal-700" on:click={() => handleClick(1)}>Results</button>
     <button class="px-4 py-2 bg-teal-600 text-white rounded-r-lg hover:bg-teal-700" on:click={() => handleClick(3)}>Login</button>
   </nav>
-  {#if user != ""}
-  <button class="px-4 py-2 bg-teal-600 text-white hover:bg-teal-700 rounded-lg absolute right-2" on:click={() => handleClick(4)}>{user}</button>
+
+
+  <button class="px-4 py-2 bg-teal-600 text-white hover:bg-teal-700 rounded-lg absolute right-2" on:click={() => dropDown = !dropDown}>{user}</button>
+  {#if dropDown}
+  <ul class="absolute top-16 right-4 bg-teal-600 text-white rounded-lg shadow-md">
+    <li class="hover:bg-teal-700">
+      <a href="#" class="block px-4 py-3">Change Password</a>
+    </li>
+    <li class="hover:bg-teal-700">
+      <a href="#" class="block px-4 py-3">Logout</a>
+    </li>
+  </ul>
   {/if}
+
+
+
+
+  <!-- {#if user != ""}
+  <button class="px-4 py-2 bg-teal-600 text-white hover:bg-teal-700 rounded-lg absolute right-2" on:click={() => handleClick(4)}>{user}</button>
+  {/if} -->
 </header>

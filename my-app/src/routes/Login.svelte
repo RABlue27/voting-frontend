@@ -12,8 +12,8 @@
     }
   </script>
 
-
-<form class="max-w-sm mx-auto p-4 bg-white rounded shadow-md" on:submit|preventDefault={handleSubmit}>
+<div class="absolute top-1/3"> 
+<form class="max-w-sm mx-auto p-4 bg-white rounded border-black border-2" on:submit|preventDefault={handleSubmit}>
   <table class="w-full">
     <thead>
       <tr>
@@ -36,3 +36,4 @@
     </tbody>
   </table>
 </form>
+</div>

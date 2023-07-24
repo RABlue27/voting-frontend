@@ -88,45 +88,57 @@
         localStorage.removeItem('votingData');
 }
 
+  function fangraphsClick(i) {
+    return;
+  }
+  
+  function brClick(i) {
+    return;
+  }
+
   </script>
   
 
 
-{#each players as player, index}
-  <div>
-    {#if player != "" && votes[index] != false}
-    <h1 class="text-3xl mt-2.5">You Voted For: {player}</h1>
+  {#each players as player, index}
+  <div class="flex items-center border-b-2 border-gray-400">
+    {#if player && votes[index]}
+      <h1 class="text-3xl mt-2.5 font-semibold">You Voted For: {player}</h1>
     {:else}
-    <h1 class="text-3xl mt-2.5"> Vote for {subject(index)} </h1>
+      <h1 class="text-3xl mt-2.5 font-semibold">Vote for {subject(index)}</h1>
+      <div class="flex ml-3 space-x-1 mt-2 mb-1">
+        <div class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-md text-white h-10 flex items-center cursor-pointer" onclick={() => fangraphsClick(index)}>FG Stats</div>
+        <div class="bg-red-400 hover:bg-red-500 px-4 py-2 rounded-md text-white h-10 flex items-center cursor-pointer" onclick={() => brClick(index)}>BR Stats</div>
+      </div>
     {/if}
   </div>
 
-
- 
+  
   <AutoComplete
   items="{allPlayers}"
   placeholder={players[index]}
   bind:value={players[index]}
   hideArrow={true}
   disabled={votes[index]}
-  class="px-1 py-2 rounded-sm border disabled:bg-slate-200 hover:bg-teal-50 w-96 mt-1 placeholder-black border-stone-950"
+  class="px-1 p-2 rounded-sm border disabled:bg-slate-200 hover:bg-teal-50 w-96 mt-1 placeholder-black border-stone-950"
 />
 
 
   <input type="text" disabled={votes[index]} bind:value={comments[index]} class=
-  "px-1 py-2 rounded-sm border disabled:bg-slate-200 hover:bg-teal-50 w-96 mb-6 mt-1 border-stone-950" 
+  "px-1 py-2 rounded-sm border disabled:bg-slate-200 hover:bg-teal-50 w-96 mb-2 mt-1 border-stone-950" 
   />
 
   <button 
   on:click={() => { handleVote(index); handleComment(index); }}
   class={
-    `py-2 px-4 bg-teal-500 hover:bg-teal-600 focus:bg-teal-700 text-white font-medium rounded shadow ${
+    `py-2 px-4 mb-2 bg-teal-500 hover:bg-teal-600 focus:bg-teal-700 text-white font-medium rounded-lg shadow-md ${
       votes[index] ? 'dark:bg-teal-700' : ''
     }`
   }
 >
   {votes[index] ? "Undo Vote" : "Save Vote"}
 </button>
+
 
   
   {/each}

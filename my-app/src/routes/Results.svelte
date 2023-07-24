@@ -136,18 +136,19 @@ let data = {
   }
 }
 
-
-
 </script>
 
+
+
+<div class="w-8/12">
 {#each Object.entries(data.Results) as [league, category]}
   <h2 class="text-2xl font-bold mt-4 mb-2 underline">{league}</h2>
   {#each Object.entries(category) as [categoryName, players]}
     <h3 class="text-xl font-semibold mt-2 mb-1">{categoryName}</h3>
     <table class="w-full border-collapse border rounded-lg overflow-hidden">
       <thead>
-        <tr class="">
-          <th class="px-4 py-2 font-semibold text-left">Player</th>
+        <tr class="border-b-2 border-t-4 border-l-4 border-r-4 border-black bg-teal-400 text-semibold text-neutral-50">
+          <th class="px-4 py-2 font-medium text-left">Player</th>
           <th class="px-4 py-2 font-semibold text-left">Votes</th>
         </tr>
       </thead>
@@ -179,3 +180,4 @@ let data = {
     </table>
   {/each}
 {/each}
+</div>
