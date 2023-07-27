@@ -1,26 +1,29 @@
 <script>
-    import {currentDisplay, username} from "./stores.js" 
 
-       let user = "";
-       let dropDown = false;
+import { currentDisplay, username } from "./stores.js";
 
+let user = "";
+let dropDown = false;
 
-    function logout() {
-      username.set("");
-    }
+function logout() {
+  user = "";
+  dropDown = false;
+  username.set("");
 
-    function handleClick(index) {
+}
 
-      if (index == 4) {
-        logout();
-        return;
-      }
-      currentDisplay.set(index);
+function handleClick(index) {
+  if (index === 4) {
+    logout();
+    return;
   }
+  currentDisplay.set(index);
+}
 
-  username.subscribe((username) => {
-    user = username;
-	});
+username.subscribe((value) => {
+  user = value;
+});
+
   
 
 
@@ -39,13 +42,14 @@
   <button class="px-4 py-2 bg-teal-600 text-white hover:bg-teal-700 rounded-lg absolute right-2" on:click={() => dropDown = !dropDown}>{user}</button>
   {#if dropDown}
   <ul class="absolute top-16 right-4 bg-teal-600 text-white rounded-lg shadow-md">
-    <li class="hover:bg-teal-700">
-      <a href="#" class="block px-4 py-3">Change Password</a>
+    <li class="hover:bg-teal-700 rounded-lg">
+      <button class="block px-4 py-3">Change Password</button>
     </li>
-    <li class="hover:bg-teal-700">
-      <a href="#" class="block px-4 py-3">Logout</a>
+    <li class="hover:bg-teal-700 rounded-lg">
+      <button on:click={() => logout()} class="block px-4 py-3">Logout</button>
     </li>
   </ul>
+  
   {/if}
 
 

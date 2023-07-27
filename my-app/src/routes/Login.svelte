@@ -4,13 +4,15 @@
     let user = '';
     let password = '';
   
-    function handleSubmit() {
+    function handleSubmit() { // Actual logic very much needed.
 
       console.log('Username:', user);
       username.set(user);
 
     }
   </script>
+  
+<img class="mt-6" src="https://mlbawards.xyz/logo.png" alt="Logo">
 
 <div class="absolute top-1/3"> 
 <form class="max-w-sm mx-auto p-4 bg-white rounded border-black border-2" on:submit|preventDefault={handleSubmit}>

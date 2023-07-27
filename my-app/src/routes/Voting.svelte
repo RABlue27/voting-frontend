@@ -88,63 +88,73 @@
         localStorage.removeItem('votingData');
 }
 
-  function fangraphsClick(i) {
-    return;
-  }
-  
-  function brClick(i) {
-    return;
-  }
+function fangraphsClick(i) {
+  window.open("https://www.fangraphs.com/");
+}
+function brClick(i) {
+  window.open("https://www.baseball-reference.com/");
+
+}
+
+
 
   </script>
   
+  <p class="text-5xl mb-4">Open Ballots</p>
+  <div class="bg-gray-200 pr-8 pl-8 pb-8 pt-2 w-4/12 rounded-md">
+    {#each players as player, index}
+    <div class="flex items-center border-b-2">
+      {#if player && votes[index]}
+      <h1 class="text-3xl mt-2.5 font-semibold underline ml-2">You Voted For: {player}</h1>
+      {:else}
+      <h1 class="text-3xl mt-2.5 font-semibold underline ml-2"> Vote for {subject(index)}</h1>
+      <div class="ml-auto"> 
+        <div class="flex space-x-1 mt-2 mb-1 bg-gray-200 p-1 mr-2">
 
+          <button on:click={() => fangraphsClick(index)} class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-sm text-white h-10 flex items-center cursor-pointer">FG Stats</button>
+          <button on:click={() => brClick(index)}  class="bg-red-400 hover:bg-red-500 px-4 py-2 rounded-sm text-white h-10 flex items-center cursor-pointer">BR Stats</button>
 
-  {#each players as player, index}
-  <div class="flex items-center border-b-2 border-gray-400">
-    {#if player && votes[index]}
-      <h1 class="text-3xl mt-2.5 font-semibold">You Voted For: {player}</h1>
-    {:else}
-      <h1 class="text-3xl mt-2.5 font-semibold">Vote for {subject(index)}</h1>
-      <div class="flex ml-3 space-x-1 mt-2 mb-1">
-        <div class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-md text-white h-10 flex items-center cursor-pointer" onclick={() => fangraphsClick(index)}>FG Stats</div>
-        <div class="bg-red-400 hover:bg-red-500 px-4 py-2 rounded-md text-white h-10 flex items-center cursor-pointer" onclick={() => brClick(index)}>BR Stats</div>
+        </div>
       </div>
-    {/if}
-  </div>
+      {/if}
+    </div>
+    
+    <div class="flex flex-col space-y-4 m-2">
 
-  
-  <AutoComplete
-  items="{allPlayers}"
-  placeholder={players[index]}
-  bind:value={players[index]}
-  hideArrow={true}
-  disabled={votes[index]}
-  class="px-1 p-2 rounded-sm border disabled:bg-slate-200 hover:bg-teal-50 w-96 mt-1 placeholder-black border-stone-950"
-/>
+      <AutoComplete
+        items="{allPlayers}"
+        placeholder={players[index]}
+        bind:value={players[index]}
+        hideArrow={true}
+        disabled={votes[index]}
+        class="px-1 p-2 rounded-sm border disabled:bg-slate-200 w-full placeholder-black border-stone-950"
+      />
+    
+      <textarea 
+        type="text" 
+        disabled={votes[index]} 
+        bind:value={comments[index]} 
+        placeholder="Comments (Optional)"
+        class="px-1 py-2 rounded-sm border disabled:bg-slate-200 w-full border-stone-950 resize-y"
+      ></textarea>
+    </div>
+    
 
-
-  <input type="text" disabled={votes[index]} bind:value={comments[index]} class=
-  "px-1 py-2 rounded-sm border disabled:bg-slate-200 hover:bg-teal-50 w-96 mb-2 mt-1 border-stone-950" 
-  />
 
   <button 
   on:click={() => { handleVote(index); handleComment(index); }}
   class={
-    `py-2 px-4 mb-2 bg-teal-500 hover:bg-teal-600 focus:bg-teal-700 text-white font-medium rounded-lg shadow-md ${
+    `ml-2 mt-1 py-2 px-4 mb-2 bg-teal-500 hover:bg-teal-600 focus:bg-teal-700 text-white font-medium rounded-lg shadow-md ${
       votes[index] ? 'dark:bg-teal-700' : ''
     }`
   }
 >
   {votes[index] ? "Undo Vote" : "Save Vote"}
 </button>
-
-
-  
   {/each}
   
-  <div class="flex space-x-10">
-    <button on:click={() => { postVotesToBackend() }} class="my-4 py-2 px-4 bg-green-700 hover:bg-green-900 text-white font-semibold rounded w-32">Submit Votes</button> 
-    <button on:click={() => { resetAll() }} class="my-4 py-2 px-4 bg-red-700 hover:bg-rose-900 text-white font-semibold rounded w-32">Reset Everything</button>
+</div>
+  <div class="flex space-x-10 items-center">
+    <button on:click={() => { postVotesToBackend() }} class="my-4 py-2 px-4 bg-green-700 hover:bg-green-900 text-white text-4xl font-semibold rounded h-20 w-64">Submit</button> 
+    <button on:click={() => { resetAll() }} class="my-4 py-2 px-4 bg-red-700 hover:bg-rose-900 text-white font-semibold text-4xl rounded w-64 h-20">Reset</button>
   </div>
-  

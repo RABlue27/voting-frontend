@@ -73,6 +73,8 @@ let data = {
 }
 
 </script>
+
+
 <div class="border-gray-950 border-2 w-8/12 mt-4">
 <table class="w-full h-full ">
   <thead>
