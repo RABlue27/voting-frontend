@@ -34,12 +34,17 @@ username.subscribe((value) => {
   <img class="h-14 absolute left-4" src="https://mlbawards.xyz/logo.png" alt="Logo">
   
   <nav class="flex items-center space-x-4 ">
+    {#if user != ""}
     <button class="px-4 py-2 bg-teal-600 text-white rounded-l-lg hover:bg-teal-700" on:click={() => handleClick(0)}>Vote</button>
     <button class="px-4 py-2 bg-teal-600 text-white hover:bg-teal-700" on:click={() => handleClick(2)}>Past Ballots</button>
     <button class="px-4 py-2 bg-teal-600 text-white hover:bg-teal-700" on:click={() => handleClick(1)}>Results</button>
     <button class="px-4 py-2 bg-teal-600 text-white rounded-r-lg hover:bg-teal-700" on:click={() => handleClick(3)}>Login</button>
+    {:else}
+    <button class="px-4 py-2 bg-teal-600 text-white rounded-l-lg hover:bg-teal-700" on:click={() => handleClick(0)}>Vote</button>
+    <button class="px-4 py-2 bg-teal-600 text-white hover:bg-teal-700" on:click={() => handleClick(2)}>Past Ballots</button>
+    <button class="px-4 py-2 bg-teal-600 text-white rounded-r-lg hover:bg-teal-700" on:click={() => handleClick(1)}>Results</button>
+    {/if}
   </nav>
-
   {#if user != ""}
   <button class="px-4 py-2 bg-teal-600 text-white hover:bg-teal-700 rounded-lg absolute right-2" on:click={() => dropDown = !dropDown}>{user}</button>
   {/if}
