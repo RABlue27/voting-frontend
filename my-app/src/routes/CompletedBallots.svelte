@@ -6,10 +6,12 @@ let data = {
   "Year": 2023,
   "Weeks": [
     {
-      "WeekNumber": 1,
+      "WeekNumber": "1/2",
       "Players": [
         {
           "Name": "Mike Trout",
+          "Div": "AL",
+          "Pos": "Hitter",
           "Comment": "He's an incredible all-around player."
         },
         {
@@ -27,7 +29,7 @@ let data = {
       ]
     },
     {
-      "WeekNumber": 2,
+      "WeekNumber": "June",
       "Players": [
         {
           "Name": "Fernando Tatis Jr.",
@@ -46,59 +48,37 @@ let data = {
           "Comment": "Crafty pitcher with excellent command and repertoire."
         }
       ]
-    },
-    {
-      "WeekNumber": 3,
-      "Players": [
-        {
-          "Name": "Vladimir Guerrero Jr.",
-          "Comment": "Continues to impress with his hitting prowess."
-        },
-        {
-          "Name": "Xander Bogaerts",
-          "Comment": "An essential player for the Boston Red Sox."
-        },
-        {
-          "Name": "Max Scherzer",
-          "Comment": "Unyielding intensity and masterful pitching."
-        },
-        {
-          "Name": "Bryce Harper",
-          "Comment": "A fierce competitor with an undeniable passion for the game."
-        }
-      ]
     }
-    
   ]
 }
 
 </script>
 
 
-<div class="border-gray-950 border-2 w-8/12 mt-4">
-<table class="w-full h-full ">
-  <thead>
-    <tr class="w-full text-left bg-teal-400 text-">
-      <th class="p-2">Week</th>
-      <th class="p-2">Name</th>
-      <th class="p-2">Comment</th>
-    </tr>
-  </thead>
-  <tbody>
-    {#each data.Weeks as week}
-    <tr class="border-gray-950 border-2 border-r-0 border-l-0">
-      <td colspan="3" class="p-2">
-        <h2 class=" font-semibold">Week {week.WeekNumber}</h2>
-      </td>
-    </tr>
-    {#each week.Players as player, index}
-    <tr class="{index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-300'}">
-      <td class="p-2"></td>
-      <td class="p-2">{player.Name}</td>
-      <td class="p-2">{player.Comment}</td>
-    </tr>
-    {/each}
-    {/each}
-  </tbody>
-</table>
+<div class=" border-black rounded-sm border-2 w-7/12 mt-4">
+  <table class="w-full h-full">
+    <thead>
+      <tr class="w-full text-left bg-teal-400 text-white border-black border-b-2">
+        <th class="p-2">Week</th>
+        <th class="p-2">Name</th>
+        <th class="p-2">Comment</th>
+      </tr>
+    </thead>
+    <tbody>
+      {#each data.Weeks as week}
+      <tr class="border-r-0 border-l-0">
+        <td colspan="3" class="p-2 font-semibold text-black">
+          { !isNaN(week.WeekNumber[0]) ? "Week " + week.WeekNumber : week.WeekNumber}
+        </td>
+      </tr>
+      {#each week.Players as player, index}
+      <tr class="{index % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200'}">
+        <td class="p-2"></td>
+        <td class="p-2">{player.Name}</td>
+        <td class="p-2">{player.Comment}</td>
+      </tr>
+      {/each}
+      {/each}
+    </tbody>
+  </table>
 </div>
