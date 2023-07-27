@@ -1,14 +1,21 @@
 <script>
 
 import { currentDisplay, username } from "./stores.js";
+import { onMount } from 'svelte';
 
 let user = "";
 let dropDown = false;
+
+onMount(async () => {
+		user = localStorage.getItem("username");
+	});
+
 
 function logout() {
   user = "";
   dropDown = false;
   username.set("");
+  localStorage.setItem("username", "");
 
 }
 
@@ -34,7 +41,7 @@ username.subscribe((value) => {
   <img class="h-14 absolute left-4" src="https://mlbawards.xyz/logo.png" alt="Logo">
   
   <nav class="flex items-center space-x-4 ">
-    {#if user != ""}
+    {#if user === ""}
     <button class="px-4 py-2 bg-teal-600 text-white rounded-l-lg hover:bg-teal-700" on:click={() => handleClick(0)}>Vote</button>
     <button class="px-4 py-2 bg-teal-600 text-white hover:bg-teal-700" on:click={() => handleClick(2)}>Past Ballots</button>
     <button class="px-4 py-2 bg-teal-600 text-white hover:bg-teal-700" on:click={() => handleClick(1)}>Results</button>

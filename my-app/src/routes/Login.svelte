@@ -7,6 +7,7 @@
     function handleSubmit() { // Actual logic very much needed.
 
       console.log('Username:', user);
+      localStorage.setItem("username", user)
       username.set(user);
 
     }

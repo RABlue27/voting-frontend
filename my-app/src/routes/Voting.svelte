@@ -88,6 +88,7 @@
         localStorage.removeItem('votingData');
 }
 
+
 function fangraphsClick(i) {
   window.open("https://www.fangraphs.com/");
 }
@@ -96,7 +97,40 @@ function brClick(i) {
 
 }
 
+function getUrlsAttribute() {
+    if (this.slug !== null) {
+        let urls = [];
+        let exp = this.slug.split('-');
+        let start = this.start;
+        let end = this.stop;
 
+        let league = exp[0];
+        let type = exp[1];
+
+        ['fg', 'br'].forEach(brand => {
+            if (brand === 'br') {
+                if (type === 'bat') {
+                    type = 'b';
+                } else if (type === 'pitch') {
+                    type = 'p';
+                }
+                urls[brand] = `https://www.baseball-reference.com/leagues/daily.fcgi?request=1&type=${type}&lastndays=7&since=${start}&dates=fromandto&fromandto=${start}.${end}&level=mlb-${league}&franch=ANY&stat_value=0`;
+            } else if (brand === 'fg') {
+                if (type === 'bat') {
+                    type = 'bat';
+                } else if (type === 'pitch') {
+                    type = 'pit';
+                }
+                urls[brand] = `https://www.fangraphs.com/leaders.aspx?pos=all&stats=${type}&lg=${league}&qual=y&type=8&season=2020&month=1000&season1=2020&ind=0&team=0&rost=0&age=0&filter=&players=0&startdate=${start}&enddate=${end}`;
+            }
+        });
+        console.log(urls);
+        return urls;
+    } else {
+        return null;
+    }
+
+}
 
   </script>
   
@@ -111,7 +145,7 @@ function brClick(i) {
       <div class="ml-auto"> 
         <div class="flex space-x-1 mt-2 mb-1 bg-gray-200 p-1 mr-2">
 
-          <button on:click={() => fangraphsClick(index)} class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-sm text-white h-10 flex items-center cursor-pointer">FG Stats</button>
+          <button on:click={() => getUrlsAttribute()} class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-sm text-white h-10 flex items-center cursor-pointer">FG Stats</button>
           <button on:click={() => brClick(index)}  class="bg-red-400 hover:bg-red-500 px-4 py-2 rounded-sm text-white h-10 flex items-center cursor-pointer">BR Stats</button>
 
         </div>

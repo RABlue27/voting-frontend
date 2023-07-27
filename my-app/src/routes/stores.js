@@ -6,4 +6,4 @@ export const currentDisplay = writable(0);
 
 export const results = writable([]);
 
-export const username = writable("RagingAcid");
+export const username = writable("");
