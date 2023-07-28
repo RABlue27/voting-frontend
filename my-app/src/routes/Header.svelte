@@ -73,9 +73,4 @@ username.subscribe((value) => {
   {/if}
 
 
-
-
-  <!-- {#if user != ""}
-  <button class="px-4 py-2 bg-teal-600 text-white hover:bg-teal-700 rounded-lg absolute right-2" on:click={() => handleClick(4)}>{user}</button>
-  {/if} -->
 </header>

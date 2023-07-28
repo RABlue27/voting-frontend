@@ -7,8 +7,14 @@ import AutoComplete from "simple-svelte-autocomplete"
 let players = ["", "", "", ""];
 let comments = ["", "", "", ""];
 let votes = [false, false, false, false];
+
+let mplayers = ["", "", "", ""];
+let mcomments = ["", "", "", ""];
+let mvotes = [false, false, false, false];
+
 let didv;
 let user = "";
+let isMonthly = true;
 const allPlayers = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua &amp; Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia &amp; Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Cape Verde", "Cayman Islands", "Chad", "Chile", "China", "Colombia", "Congo", "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia", "Cruise Ship", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Kyrgyz Republic", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Mauritania", "Mauritius", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Namibia", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre &amp; Miquelon", "Samoa", "San Marino", "Satellite", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "South Africa", "South Korea", "Spain", "Sri Lanka", "St Kitts &amp; Nevis", "St Lucia", "St Vincent", "St. Lucia", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor L'Este", "Togo", "Tonga", "Trinidad &amp; Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks &amp; Caicos", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"];
 import {
     voted,
@@ -33,6 +39,11 @@ function saveVotingData() {
         comments,
         votes
     }));
+    localStorage.setItem('monthlyData', JSON.stringify({
+        mplayers,
+        mcomments,
+        mvotes
+    }));
 }
 
 function jsonifyVotes() {
@@ -46,17 +57,31 @@ function jsonifyVotes() {
     }
     j.user = localStorage.getItem("username");
     j.timestamp = Date.now();
+    j.isMonthly = false;
     return j;
 }
 
+function jsonifyMonthly() {
+    var j = {};
+    for (let i = 0; i < mplayers.length; i++) {
+        let playerKey = "player" + (i + 1);
+        let commentKey = "comment" + (i + 1);
+
+        j[playerKey] = mplayers[i];
+        j[commentKey] = mcomments[i];
+    }
+    j.user = localStorage.getItem("username");
+    j.timestamp = Date.now();
+    j.isMonthly = true;
+    return j;
+}
 
 function postVotesToBackend() {
 
     let results = jsonifyVotes();
+    if (isMonthly) { let m = jsonifyMonthly(); console.log(m); mvotes = mvotes.map(() => true); }
     console.log(results);
-    // results.set(players.filter((player, index) => votes[index] !== false));
     votes = votes.map(() => true);
-    // voted.set(true);
     currentDisplay.set(1);
     saveVotingData();
 }
@@ -73,21 +98,40 @@ onMount(() => {
         comments = storedComments;
         votes = storedVotes;
     }
+    if (isMonthly) {
+        const secondData = localStorage.getItem('monthlyData');
+        if (secondData) {
+        const {
+            mplayers: storedPlayers,
+            mcomments: storedComments,
+            mvotes: storedVotes
+        } = JSON.parse(secondData);
+        mplayers = storedPlayers;
+        mcomments = storedComments;
+        mvotes = storedVotes;
+    }
+    }
 });
 
 function handleChange(event, index) {
     players[index] = event.target.value;
 }
 
-function handleComment(event, index) {
+function handleComment(event, index, isMonth) {
     // comments[index] = event.target.value;
     return;
 }
 
-function handleVote(index) {
+function handleVote(index, isMonth) {
+    if (!isMonth) {
     players[index] = players[index];
     votes[index] = !votes[index];
     saveVotingData();
+    return;
+    }  
+    mplayers[index] = mplayers[index];
+    mvotes[index] = !mvotes[index];
+    saveVotingData(); 
 }
 
 function subject(index) {
@@ -101,6 +145,10 @@ function resetAll() {
     votes = [false, false, false, false];
     voted.set = false;
     localStorage.removeItem('votingData');
+    mplayers = ["", "", "", ""];
+    mcomments = ["", "", "", ""];
+    mvotes = [false, false, false, false];
+    localStorage.removeItem('monthlyData');
 }
 
 function handleCreate(player) {
@@ -133,51 +181,43 @@ function getNdaysBR(level, type, n) {
     const currentDate = new Date();
     const lastWeekDate = new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000);
 
-    // const currentYear = currentDate.getFullYear();
-    // const currentMonth = String(currentDate.getMonth() + 1).padStart(2, '0');
-    // const currentDay = String(currentDate.getDate()).padStart(2, '0');
-
-    // const lastWeekYear = lastWeekDate.getFullYear();
-    // const lastWeekMonth = String(lastWeekDate.getMonth() + 1).padStart(2, '0');
-    // const lastWeekDay = String(lastWeekDate.getDate()).padStart(2, '0');
-
     const modifiedURL = `https://www.baseball-reference.com/leagues/daily.fcgi?request=1&type=${type}&user_team=&bust_cache=&dates=lastndays&lastndays=${n}&level=${level}&franch=ANY`;
     return modifiedURL;
 }
 
 // AL hitter, AL pitcher, NL hitter, NL pitcher
-function fangraphsClick(i) {
+function fangraphsClick(i, d) {
     switch (i) {
         case 0:
-            window.open(getNdaysFanduel("al", "bat", 7));
+            window.open(getNdaysFanduel("al", "bat", d));
             return;
         case 1:
-            window.open(getNdaysFanduel("al", "pit", 7));
+            window.open(getNdaysFanduel("al", "pit", d));
             return;
         case 2:
-            window.open(getNdaysFanduel("nl", "bat", 7));
+            window.open(getNdaysFanduel("nl", "bat", d));
             return;
         case 3:
-            window.open(getNdaysFanduel("nl", "pit", 7));
+            window.open(getNdaysFanduel("nl", "pit", d));
             return;
         default:
             console.log("Disaster");
     }
 }
 
-function brClick(i) {
+function brClick(i, d) {
     switch (i) {
         case 0:
-            window.open(getNdaysBR("mlb-al", "b", 7));
+            window.open(getNdaysBR("mlb-al", "b", d));
             return;
         case 1:
-            window.open(getNdaysBR("mlb-al", "p", 7));
+            window.open(getNdaysBR("mlb-al", "p", d));
             return;
         case 2:
-            window.open(getNdaysBR("mlb-nl", "b", 7));
+            window.open(getNdaysBR("mlb-nl", "b", d));
             return;
         case 3:
-            window.open(getNdaysBR("mlb-nl", "p", 7));
+            window.open(getNdaysBR("mlb-nl", "p", d));
             return;
         default:
             console.log("Disaster");
@@ -197,8 +237,8 @@ function brClick(i) {
       <div class="ml-auto"> 
         <div class="flex space-x-1 mt-2 mb-1 bg-gray-200 p-1 mr-2">
 
-          <button on:click={() => fangraphsClick(index)} class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-sm text-white h-10 flex items-center cursor-pointer">FG Stats</button>
-          <button on:click={() => brClick(index)}  class="bg-red-400 hover:bg-red-500 px-4 py-2 rounded-sm text-white h-10 flex items-center cursor-pointer">BR Stats</button>
+          <button on:click={() => fangraphsClick(index, 7)} class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-sm text-white h-10 flex items-center cursor-pointer">FG Stats</button>
+          <button on:click={() => brClick(index, 7)}  class="bg-red-400 hover:bg-red-500 px-4 py-2 rounded-sm text-white h-10 flex items-center cursor-pointer">BR Stats</button>
 
         </div>
       </div>
@@ -230,7 +270,7 @@ function brClick(i) {
 
 
   <button 
-  on:click={() => { handleVote(index); handleComment(index); }}
+  on:click={() => { handleVote(index, false); handleComment(index, false); }}
   class={
     `ml-2 mt-1 py-2 px-4 mb-2 bg-teal-500 hover:bg-teal-600 focus:bg-teal-700 text-white font-medium rounded-lg shadow-md ${
       votes[index] ? 'dark:bg-teal-700' : ''
@@ -243,7 +283,67 @@ function brClick(i) {
 
   
 </div>
-  <div class="flex space-x-10 items-center">
-    <button on:click={() => { postVotesToBackend() }} class="my-4 py-2 px-4 bg-green-700 hover:bg-green-900 text-white text-4xl font-semibold rounded h-20 w-64">Submit</button> 
-    <button on:click={() => { resetAll() }} class="my-4 py-2 px-4 bg-red-700 hover:bg-rose-900 text-white font-semibold text-4xl rounded w-64 h-20">Reset</button>
-  </div>
+
+
+{#if isMonthly} 
+<p class="text-5xl mb-4">Monthly Ballots</p>
+
+  <div class="bg-gray-200 pr-8 pl-8 pb-8 pt-2 w-4/12 rounded-md">
+    {#each mplayers as player, index}
+    <div class="flex items-center">
+      {#if player && mvotes[index]}
+      <h1 class="text-3xl mt-2.5 font-semibold underline ml-2">You Voted For: {player}</h1>
+      {:else}
+      <h1 class="text-3xl mt-2.5 font-semibold underline ml-2"> Vote for {subject(index)}</h1>
+      <div class="ml-auto"> 
+        <div class="flex space-x-1 mt-2 mb-1 bg-gray-200 p-1 mr-2">
+
+          <button on:click={() => fangraphsClick(index, 30)} class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-sm text-white h-10 flex items-center cursor-pointer">FG Stats</button>
+          <button on:click={() => brClick(index, 30)}  class="bg-red-400 hover:bg-red-500 px-4 py-2 rounded-sm text-white h-10 flex items-center cursor-pointer">BR Stats</button>
+
+        </div>
+      </div>
+      {/if}
+    </div>
+    
+    <div class="flex flex-col space-y-4 m-2 ">
+
+      <AutoComplete
+        items="{allPlayers}"
+        placeholder={mplayers[index]}
+        bind:value={mplayers[index]}
+        hideArrow={true}
+        disabled={mvotes[index]}
+        create={true}
+        onCreate={handleCreate}
+        class="px-1 p-2 rounded-sm border disabled:bg-slate-200 w-full placeholder-black border-stone-950"
+      />
+    
+      <textarea 
+        type="text" 
+        disabled={mvotes[index]} 
+        bind:value={mcomments[index]} 
+        placeholder="Comments (Optional)"
+        class="px-1 py-2 rounded-sm border disabled:bg-slate-200 w-full border-stone-950 resize-y"
+      ></textarea>
+    </div>
+    
+
+
+  <button 
+  on:click={() => { handleVote(index, true); handleComment(index, true); }}
+  class={
+    `ml-2 mt-1 py-2 px-4 mb-2 bg-teal-500 hover:bg-teal-600 focus:bg-teal-700 text-white font-medium rounded-lg shadow-md ${
+      mvotes[index] ? 'dark:bg-teal-700' : ''
+    }`}>
+  {mvotes[index] ? "Undo Vote" : "Save Vote"}
+</button>
+  {/each}
+
+  
+</div>
+{/if}
+<div class="flex space-x-10 items-center">
+  <button on:click={() => { postVotesToBackend() }} class="my-4 py-2 px-4 bg-green-700 hover:bg-green-900 text-white text-4xl font-semibold rounded h-20 w-64">Submit</button> 
+  <button on:click={() => { resetAll() }} class="my-4 py-2 px-4 bg-red-700 hover:bg-rose-900 text-white font-semibold text-4xl rounded w-64 h-20">Reset</button>
+</div>
