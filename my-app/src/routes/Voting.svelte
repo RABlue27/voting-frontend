@@ -111,6 +111,7 @@ function handleCreate(player) {
 
 function getNdaysFanduel(level, type, n) {
     const currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() - 1);
     const lastWeekDate = new Date(currentDate.getTime() - n * 24 * 60 * 60 * 1000);
 
     const currentYear = currentDate.getFullYear();
