@@ -40,7 +40,10 @@ username.subscribe((value) => {
 
 
 <header class="bg-teal-500 h-16 flex justify-center items-center px-4 ">
-  <img class="h-14 absolute left-4" src="https://mlbawards.xyz/logo.png" alt="Logo">
+
+  <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">
+    <img class="h-14 absolute left-4 top-1" src="https://mlbawards.xyz/logo.png" alt="Logo">
+  </a>
   
   <nav class="flex items-center space-x-4 ">
     {#if user === ""}
