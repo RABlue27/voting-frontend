@@ -8,7 +8,8 @@
     let didv;
     let user = "";
     const allPlayers = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua &amp; Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia &amp; Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Cape Verde","Cayman Islands","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cruise Ship","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kuwait","Kyrgyz Republic","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Mauritania","Mauritius","Mexico","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Namibia","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre &amp; Miquelon","Samoa","San Marino","Satellite","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","South Africa","South Korea","Spain","Sri Lanka","St Kitts &amp; Nevis","St Lucia","St Vincent","St. Lucia","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad &amp; Tobago","Tunisia","Turkey","Turkmenistan","Turks &amp; Caicos","Uganda","Ukraine","United Arab Emirates","United Kingdom","Uruguay","Uzbekistan","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
-    import { voted, currentDisplay, results, username } from "./stores.js";
+    import { voted, currentDisplay, username, results } from "./stores.js";
+    import { get } from 'svelte/store';
 
 	voted.subscribe((voted) => {
     voted ? didv = true: didv = false;
@@ -33,14 +34,14 @@
         j[playerKey] = players[i];
         j[commentKey] = comments[i];
 }
-      j.user = user;
+      j.user = localStorage.getItem("username");
       j.timestamp = Date.now();
       return j;
     }
 
-    import { fade } from 'svelte/transition';
   
     function postVotesToBackend() {
+
       let results = jsonifyVotes();
       console.log(results);
       // results.set(players.filter((player, index) => votes[index] !== false));
@@ -88,48 +89,84 @@
         localStorage.removeItem('votingData');
 }
 
+  function handleCreate(player) {
 
+    return player;
+
+  }
+
+  function getNdaysFanduel(level, type, n) {
+  const currentDate = new Date();
+  const lastWeekDate = new Date(currentDate.getTime() - n * 24 * 60 * 60 * 1000);
+
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const currentDay = String(currentDate.getDate()).padStart(2, '0');
+
+  const lastWeekYear = lastWeekDate.getFullYear();
+  const lastWeekMonth = String(lastWeekDate.getMonth() + 1).padStart(2, '0');
+  const lastWeekDay = String(lastWeekDate.getDate()).padStart(2, '0');
+
+ 
+  // "                              https://www.fangraphs.com/leaders.aspx?pos=all&stats=bat&lg=nl&qual=y&type=8&season=2023&month=1000&season1=2023&ind=0&team=0&rost=&age=0&filter=&players=&startdate=2023-07-23&enddate=2023-07-30"
+  const modifiedURL = `https://www.fangraphs.com/leaders.aspx?pos=all&stats=${type}&lg=${level}&qual=y&type=8&season=2023&month=1000&season1=2023&ind=0&team=0&rost=&age=0&filter=&players=&startdate=${lastWeekYear}-${lastWeekMonth}-${lastWeekDay}&enddate=${currentYear}-${currentMonth}-${currentDay}`;
+  return modifiedURL;
+  }
+
+
+function getNdaysBR(level, type, n) {
+  const currentDate = new Date();
+  const lastWeekDate = new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const currentDay = String(currentDate.getDate()).padStart(2, '0');
+
+  const lastWeekYear = lastWeekDate.getFullYear();
+  const lastWeekMonth = String(lastWeekDate.getMonth() + 1).padStart(2, '0');
+  const lastWeekDay = String(lastWeekDate.getDate()).padStart(2, '0');
+
+  const modifiedURL = `https://www.baseball-reference.com/leagues/daily.fcgi?request=1&type=${type}&user_team=&bust_cache=&dates=lastndays&lastndays=${n}&since=${lastWeekYear}-${lastWeekMonth}-${lastWeekDay}&fromandto=${lastWeekYear}-${lastWeekMonth}-${lastWeekDay}.${currentYear}-${currentMonth}-${currentDay}&level=${level}&franch=ANY`;
+  return modifiedURL;
+}
+
+// AL hitter, AL pitcher, NL hitter, NL pitcher
 function fangraphsClick(i) {
-  window.open("https://www.fangraphs.com/");
+  switch(i){
+    case 0:
+      window.open(getNdaysFanduel("al", "bat", 7));
+      return;
+    case 1:
+      window.open(getNdaysFanduel("al", "pit", 7));
+      return;
+    case 2:
+      window.open(getNdaysFanduel("nl", "bat", 7));
+      return;
+    case 3:
+      window.open(getNdaysFanduel("nl", "pit", 7));
+      return;
+    default:
+      console.log("fucker");
 }
+}
+
 function brClick(i) {
-  window.open("https://www.baseball-reference.com/");
-
+  switch(i){
+    case 0:
+      window.open(getNdaysBR("mlb-al", "b", 7));
+      return;
+    case 1:
+      window.open(getNdaysBR("mlb-al", "p", 7));
+      return;
+    case 2:
+      window.open(getNdaysBR("mlb-nl", "b", 7));
+      return;
+    case 3:
+      window.open(getNdaysBR("mlb-nl", "p", 7));
+      return;
+    default:
+      console.log("fucker");
 }
-
-function getUrlsAttribute() {
-    if (this.slug !== null) {
-        let urls = [];
-        let exp = this.slug.split('-');
-        let start = this.start;
-        let end = this.stop;
-
-        let league = exp[0];
-        let type = exp[1];
-
-        ['fg', 'br'].forEach(brand => {
-            if (brand === 'br') {
-                if (type === 'bat') {
-                    type = 'b';
-                } else if (type === 'pitch') {
-                    type = 'p';
-                }
-                urls[brand] = `https://www.baseball-reference.com/leagues/daily.fcgi?request=1&type=${type}&lastndays=7&since=${start}&dates=fromandto&fromandto=${start}.${end}&level=mlb-${league}&franch=ANY&stat_value=0`;
-            } else if (brand === 'fg') {
-                if (type === 'bat') {
-                    type = 'bat';
-                } else if (type === 'pitch') {
-                    type = 'pit';
-                }
-                urls[brand] = `https://www.fangraphs.com/leaders.aspx?pos=all&stats=${type}&lg=${league}&qual=y&type=8&season=2020&month=1000&season1=2020&ind=0&team=0&rost=0&age=0&filter=&players=0&startdate=${start}&enddate=${end}`;
-            }
-        });
-        console.log(urls);
-        return urls;
-    } else {
-        return null;
-    }
-
 }
 
   </script>
@@ -145,7 +182,7 @@ function getUrlsAttribute() {
       <div class="ml-auto"> 
         <div class="flex space-x-1 mt-2 mb-1 bg-gray-200 p-1 mr-2">
 
-          <button on:click={() => getUrlsAttribute()} class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-sm text-white h-10 flex items-center cursor-pointer">FG Stats</button>
+          <button on:click={() => fangraphsClick(index)} class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-sm text-white h-10 flex items-center cursor-pointer">FG Stats</button>
           <button on:click={() => brClick(index)}  class="bg-red-400 hover:bg-red-500 px-4 py-2 rounded-sm text-white h-10 flex items-center cursor-pointer">BR Stats</button>
 
         </div>
@@ -161,6 +198,8 @@ function getUrlsAttribute() {
         bind:value={players[index]}
         hideArrow={true}
         disabled={votes[index]}
+        create={true}
+        onCreate={handleCreate}
         class="px-1 p-2 rounded-sm border disabled:bg-slate-200 w-full placeholder-black border-stone-950"
       />
     
