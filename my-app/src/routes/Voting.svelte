@@ -186,9 +186,10 @@ function brClick(i) {
   </script>
   
   <p class="text-5xl mb-4">Open Ballots</p>
+
   <div class="bg-gray-200 pr-8 pl-8 pb-8 pt-2 w-4/12 rounded-md">
     {#each players as player, index}
-    <div class="flex items-center border-b-2">
+    <div class="flex items-center">
       {#if player && votes[index]}
       <h1 class="text-3xl mt-2.5 font-semibold underline ml-2">You Voted For: {player}</h1>
       {:else}
@@ -204,7 +205,7 @@ function brClick(i) {
       {/if}
     </div>
     
-    <div class="flex flex-col space-y-4 m-2">
+    <div class="flex flex-col space-y-4 m-2 ">
 
       <AutoComplete
         items="{allPlayers}"
@@ -239,6 +240,7 @@ function brClick(i) {
   {votes[index] ? "Undo Vote" : "Save Vote"}
 </button>
   {/each}
+
   
 </div>
   <div class="flex space-x-10 items-center">
