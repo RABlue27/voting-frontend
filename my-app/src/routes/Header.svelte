@@ -1,38 +1,40 @@
 <script>
 
-import { currentDisplay, username } from "./stores.js";
-import { onMount } from 'svelte';
+import {
+    currentDisplay,
+    username
+} from "./stores.js";
+import {
+    onMount
+} from 'svelte';
 
 let user = "";
 let dropDown = false;
 
 onMount(async () => {
-		user = localStorage.getItem("username");
-	});
+    user = localStorage.getItem("username");
+});
 
 
 function logout() {
-  user = "";
-  dropDown = false;
-  username.set("");
-  localStorage.setItem("username", "");
+    user = "";
+    dropDown = false;
+    username.set("");
+    localStorage.setItem("username", "");
 
 }
 
 function handleClick(index) {
-  if (index === 4) {
-    logout();
-    return;
-  }
-  currentDisplay.set(index);
+    if (index === 4) {
+        logout();
+        return;
+    }
+    currentDisplay.set(index);
 }
 
 username.subscribe((value) => {
-  user = value;
+    user = value;
 });
-
-  
-
 
 </script>
 
