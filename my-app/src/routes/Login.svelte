@@ -1,6 +1,5 @@
 <script>
-    import { username  } from "./stores";
-
+    import { username } from "./stores";
     let user = '';
     let password = '';
   
@@ -11,6 +10,8 @@
       username.set(user);
 
     }
+
+
   </script>
   
 <img class="mt-6" src="https://mlbawards.xyz/logo.png" alt="Logo">
@@ -53,3 +54,4 @@
     </table>
   </form>
 </div>
+

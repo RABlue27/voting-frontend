@@ -84,6 +84,8 @@ function postVotesToBackend() {
     votes = votes.map(() => true);
     currentDisplay.set(1);
     saveVotingData();
+
+    // here is where I would POST. 
 }
 
 onMount(() => {
@@ -132,6 +134,14 @@ function handleVote(index, isMonth) {
     mplayers[index] = mplayers[index];
     mvotes[index] = !mvotes[index];
     saveVotingData(); 
+}
+
+// to use when API backend is up 
+async function getItems(keyword) {
+  const url = "api endpoint will go here...";
+  const response = await fetch(url);
+  const json = await response.json();
+  return json.results
 }
 
 function subject(index) {
@@ -247,6 +257,15 @@ function brClick(i, d) {
     
     <div class="flex flex-col space-y-4 m-2 ">
 
+
+        <!-- <AutoComplete
+    searchFunction="{getItems}"
+    delay="200"
+    localFiltering={false}
+    labelFieldName="name"
+    valueFieldName="id"
+    bind:selectedItem="{myValue}"
+    /> -->
       <AutoComplete
         items="{allPlayers}"
         placeholder={players[index]}
