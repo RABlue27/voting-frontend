@@ -317,7 +317,7 @@ function brClick(i, d) {
         create={true}
         onCreate={handleCreate}
         class="px-1 p-2 rounded-sm border disabled:bg-slate-200 w-full placeholder-black border-stone-950"
-      />
+      > </AutoComplete>
     
       <textarea 
         type="text" 
