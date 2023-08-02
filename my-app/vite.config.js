@@ -8,7 +8,8 @@ export default defineConfig({
   ],
   build: {
     rollupOptions: {
-      external: ['simple-svelte-autocomplete'],
+      // Remove 'simple-svelte-autocomplete' from the 'external' array
+      external: [],
       // Other rollup options if needed
     },
   },
