@@ -266,7 +266,7 @@ function brClick(i, d) {
     valueFieldName="id"
     bind:selectedItem="{myValue}"
     /> -->
-      <AutoComplete
+      <!-- <AutoComplete
         items="{allPlayers}"
         placeholder={players[index]}
         bind:value={players[index]}
@@ -276,7 +276,7 @@ function brClick(i, d) {
         onCreate={handleCreate}
         class="px-1 p-2 rounded-sm border disabled:bg-slate-200 w-full placeholder-black border-stone-950"
       > </AutoComplete>
-    
+     -->
       <textarea 
         type="text" 
         disabled={votes[index]} 
