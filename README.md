@@ -11,7 +11,7 @@ Originally designed to plug into a backend, I created this branch to show off en
 
 ## Demo
 
-You can check out the live demo of the web app at [Demo URL](https://elegant-fairy-68cd3b.netlify.app/).
+You can check out the live demo of the web app at [Demo URL](https://voting-frontend.vercel.app/).
 
 ## Features
 
