@@ -1,7 +1,7 @@
 <script>
 
-
-
+import {onMount} from 'svelte';
+// import data from API endpoint 
 let data = {
   "Year": 2023,
   "Weeks": [
@@ -51,6 +51,11 @@ let data = {
     }
   ]
 }
+
+// onMount(async () => {
+//     const res = await fetch(`/mlb/endpoint`);
+//     data = await res.json();
+//   });
 
 </script>
 
