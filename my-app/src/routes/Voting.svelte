@@ -1,7 +1,5 @@
 <script>
-import {
-    onMount
-} from 'svelte';
+import { onMount } from 'svelte';
 import AutoComplete from "simple-svelte-autocomplete"
 
 let players = ["", "", "", ""];
