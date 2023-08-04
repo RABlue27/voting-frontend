@@ -16,7 +16,9 @@
     let didv;
     let user = "";
     let isMonthly = true;
-    const allPlayers = playersList
+   
+    let allPlayers;
+    
     import {
         voted,
         currentDisplay,
@@ -62,6 +64,7 @@
         return j;
     }
     
+    // TOOD: only post player name (or ID?)
     function jsonifyMonthly() {
         var j = {};
         for (let i = 0; i < mplayers.length; i++) {
@@ -88,6 +91,7 @@
     }
     
     onMount(() => {
+        allPlayers = playersList
         const storedData = localStorage.getItem('votingData');
         if (storedData) {
             const {
@@ -230,7 +234,8 @@
       </script>
       
       <p class="text-5xl mb-4">Open Ballots</p>
-    
+
+          
       <div class="bg-gray-200 pr-8 pl-8 pb-8 pt-2 w-4/12 rounded-md">
         {#each players as player, index}
         <div class="flex items-center">

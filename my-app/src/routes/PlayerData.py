@@ -40,7 +40,7 @@ def get_team_abbreviation(team_id):
     return team_ids.get(team_id)
 
 
-statcast_data = statcast(start_dt="2023-08-03", end_dt="2023-08-04")
+statcast_data = statcast(start_dt="2023-01-01", end_dt="2023-08-04")
 
 
 player_names = statcast_data['player_name'].unique()
