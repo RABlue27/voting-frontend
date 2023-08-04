@@ -14,7 +14,8 @@
 		"postcss": "^8.4.27",
 		"svelte": "^4.0.5",
 		"tailwindcss": "^3.3.3",
-		"vite": "^4.4.2"
+		"vite": "^4.4.2",
+		"simple-svelte-autocomplete": "^2.5.2"
 	},
 	"type": "module"
 }
