@@ -89,9 +89,13 @@
         currentDisplay.set(1);
         saveVotingData();
     }
+
+    async function loadPlayers() {
+      allPlayers = playersList;
+    }
     
     onMount(() => {
-        allPlayers = playersList
+        loadPlayers();
         const storedData = localStorage.getItem('votingData');
         if (storedData) {
             const {
