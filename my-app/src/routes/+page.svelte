@@ -19,9 +19,9 @@
 </script>
 
 
+<main class="grid place-items-center sm:w-full lg:w-2/3 xl:w-3/5 2xl:w-11/12">
 <Header /> 
 
-<main class="grid place-items-center">
   {#if display == 0}
     <title> Voting </title>
       <Voting bind:results={$results} />

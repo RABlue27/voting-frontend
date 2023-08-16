@@ -240,7 +240,7 @@
       <p class="text-5xl mb-4">Open Ballots</p>
 
           
-      <div class="bg-gray-200 pr-8 pl-8 pb-8 pt-2 w-4/12 rounded-md">
+      <div class="bg-gray-200 pr-8 pl-8 pb-8 pt-2 rounded-md">
         {#each players as player, index}
         <div class="flex items-center">
           {#if player && votes[index]}
@@ -301,7 +301,7 @@
     {#if isMonthly} 
     <p class="text-5xl mb-4">Monthly Ballots</p>
     
-      <div class="bg-gray-200 pr-8 pl-8 pb-8 pt-2 w-4/12 rounded-md">
+      <div class="bg-gray-200 pr-8 pl-8 pb-8 pt-2 rounded-md">
         {#each mplayers as player, index}
         <div class="flex items-center">
           {#if player && mvotes[index]}

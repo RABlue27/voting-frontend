@@ -136,7 +136,7 @@ function removeWeek() {
 }
   </script>
   
-<div class="border-black rounded-sm border-2 w-7/12 mt-4">
+<div class="xl:border-black rounded-sm border-2 mt-4">
 <table class="w-full h-full">
   <thead>
     <tr class="w-full text-left bg-teal-400 text-white border-black border-b-2">
