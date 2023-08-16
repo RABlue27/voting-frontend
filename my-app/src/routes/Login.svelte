@@ -14,7 +14,7 @@
 
   </script>
   
-<img class="mt-6" src="https://mlbawards.xyz/logo.png" alt="Logo">
+<img class="mt-6" src="https://mlbawards.xyz/logo.png" alt="MLB awards logo">
 
 <div class="absolute top-1/3"> 
   <form class="max-w-sm mx-auto p-4 bg-white rounded border-black border-2" on:submit|preventDefault={handleSubmit}>
