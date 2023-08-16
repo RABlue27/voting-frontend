@@ -6,8 +6,12 @@ let user = "";
 let dropDown = false;
 
 onMount(async () => {
-    user = localStorage.getItem("username");
+    let user = localStorage.getItem("username");
+    if (user === null) {
+        user = "Default User";
+    }
 });
+
 
 
 function logout() {
